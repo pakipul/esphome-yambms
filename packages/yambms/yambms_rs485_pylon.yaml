@@ -48,7 +48,14 @@ external_components:
 uart:
   - id: !extend ${rs485_uart_id}
     baud_rate: ${rs485_uart_baud_rate}
-
+  - id: !extend ${rs232_uart_id}
+    baud_rate: ${rs232_uart_baud_rate}
+    
+globals:
+  - id: rs232_lock
+    type: bool
+    restore_value: no
+    initial_value: 'false'
 select:
   - platform: template
     name: "YamBMS protocol"
@@ -124,8 +131,97 @@ sensor:
     accuracy_decimals: 0
     icon: mdi:update
     entity_category: diagnostic
+    
+   #sensor for rs232
+  - platform: template
+    name: "Input Voltage"
+    id: rs232${rs485_id}_input_voltage
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Input Frequency"
+    id: rs232${rs485_id}_input_frequency
+    unit_of_measurement: "Hz"
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Output Voltage"
+    id: rs232${rs485_id}_output_voltage
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Output Frequency"
+    id: rs232${rs485_id}_output_frequency
+    unit_of_measurement: "Hz"
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Battery Voltage"
+    id: rs232${rs485_id}_battery_voltage
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Battery Capacity"
+    id: rs232${rs485_id}_battery_capacity
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+
+  - platform: template
+    name: "Load Percentage"
+    id: rs232${rs485_id}_load_percentage
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+
+  - platform: template
+    name: "Inverter Temperature"
+    id: rs232${rs485_id}_inverter_temperature
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+
+  - platform: template
+    name: "PV Voltage"
+    id: rs232${rs485_id}_pv_voltage
+    unit_of_measurement: "V"
+    accuracy_decimals: 0
+
+  - platform: template
+    name: "Solar Charge Current"
+    id: rs232${rs485_id}_solar_charge_current
+    unit_of_measurement: "A"
+    accuracy_decimals: 0
+
+  - platform: template
+    name: "Charger Temperature"
+    id: rs232${rs485_id}_charger_temperature
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+    
+  - platform: template
+    name: "Solar Power"
+    id: rs232${rs485_id}_solar_power
+    unit_of_measurement: "W"
+    accuracy_decimals: 1
 
 binary_sensor:
+  # binary_sensor rs232
+  - platform: template
+    name: "Controller Connected"
+    id: rs232${rs485_id}_controller_connecter
+    trigger_on_initial_state: false
+
+  - platform: template
+    name: "Charging Status"
+    id: rs232${rs485_id}_charging_status
+    trigger_on_initial_state: false
+
+  - platform: template
+    name: "Battery Full Status"
+    id: rs232${rs485_id}_battery_full_status
+    trigger_on_initial_state: false    
+    
   # --- Passive Proxy Alarm/Protection Sensors ---
   - platform: template
     id: rs485${rs485_id}_proxy_total_voltage_high_alarm
@@ -187,8 +283,109 @@ binary_sensor:
         - lambda: |-
             // Pass the current state to the update function
             id(global_update_fault)(${CAT_INV_RS485}, ${rs485_id}, !x);
+text_sensor:
+  - platform: template
+    name: "Raw Response HEX"
+    id: rs232${rs485_id}_raw_response_hex
+    icon: "mdi:hexadecimal"
+    
+  - platform: template
+    id: rs232${rs485_id}_tcontroller_connected
+    name: "Controller Connected State"
 
+  - platform: template
+    id: rs232${rs485_id}_tcharging_state
+    name: "Charging State"
+    
+  - platform: template
+    id: rs232${rs485_id}_tbattery_full
+    name: "Battery Full"
+    
 interval:
+- interval: ${rs232_interval}
+    then:
+      # Langkah 1: Kunci jalur agar RS485 menahan balasan sementara
+      - lambda: |-
+          id(rs232_lock) = true;
+
+          // Clear buffer RX sebelum mengirim perintah
+          while (id(${rs232_uart_id}).read_byte(nullptr));
+
+          // Kirim Perintah Hex RS232
+          uint8_t cmd[] = {0x43, 0x4D, 0x53, 0x47, 0x06, 0x49, 0x4E, 0x56, 0x2D, 0x48, 0x42};
+          id(${rs232_uart_id}).write_array(cmd, sizeof(cmd));
+
+      # Langkah 2: Beri jeda non-blocking untuk membiarkan data masuk ke buffer RX
+      - delay: 200ms
+
+      # Langkah 3: Baca dan parsing data dari buffer RS232
+      - lambda: |-
+          std::vector<uint8_t> response;
+          uint8_t data;
+          while (id(${rs232_uart_id}).read_byte(&data)) {
+            response.push_back(data);
+          }
+
+          if (response.size() >= 86) {
+            // Convert to HEX string
+            char hex_buf[400];
+            int pos = 0;
+            for (size_t i = 0; i < 86; i++) {
+              if (i > 0 && i % 16 == 0) {
+                pos += snprintf(hex_buf + pos, sizeof(hex_buf) - pos, "\n");
+              }
+              pos += snprintf(hex_buf + pos, sizeof(hex_buf) - pos, "%02X ", response[i]);
+            }
+            id(rs232${rs485_id}_raw_response_hex).publish_state(hex_buf);
+
+            // Parsing Sensors
+            uint16_t raw_v_in = (response[18] << 8) | response[17];
+            id(rs232${rs485_id}_input_voltage).publish_state(raw_v_in / 10.0);
+
+            uint16_t raw_f_in = (response[20] << 8) | response[19];
+            id(rs232${rs485_id}_input_frequency).publish_state(raw_f_in / 10.0);
+
+            uint16_t raw_v_out = (response[22] << 8) | response[21];
+            id(rs232${rs485_id}_output_voltage).publish_state(raw_v_out / 10.0);
+
+            uint16_t raw_f_out = (response[24] << 8) | response[23];
+            id(rs232${rs485_id}_output_frequency).publish_state(raw_f_out / 10.0);
+
+            uint16_t raw_v_bat = (response[26] << 8) | response[25];
+            id(rs232${rs485_id}_battery_voltage).publish_state(raw_v_bat / 10.0);
+
+            uint16_t cap_bat = (response[28] << 8) | response[27];
+            id(rs232${rs485_id}_battery_capacity).publish_state(cap_bat);
+
+            id(rs232${rs485_id}_load_percentage).publish_state(response[29]);
+            id(rs232${rs485_id}_inverter_temperature).publish_state(response[30]);
+
+            uint16_t raw_pv_v = (response[40] << 8) | response[39];
+            id(rs232${rs485_id}_pv_voltage).publish_state(raw_pv_v);
+
+            uint16_t raw_pv_c = response[41];
+            id(rs232${rs485_id}_solar_charge_current).publish_state(raw_pv_c);
+
+            id(rs232${rs485_id}_charger_temperature).publish_state(response[42]);
+
+            float pv_p = raw_v_bat * raw_pv_c;
+            id(rs232${rs485_id}_solar_power).publish_state(pv_p / 10.0);
+
+            id(rs232${rs485_id}_controller_connecter).publish_state((response[5] >> 3) & 1);
+            id(rs232${rs485_id}_charging_status).publish_state((response[5] >> 2) & 1);
+            id(rs232${rs485_id}_battery_full_status).publish_state(response[5] & 1);
+
+            id(rs232${rs485_id}_tcontroller_connected).publish_state(((response[5] >> 3) & 1) ? "Connected" : "Not Connected");
+            id(rs232${rs485_id}_tcharging_state).publish_state(((response[5] >> 2) & 1) ? "Charging" : "Not Charging");
+            id(rs232${rs485_id}_tbattery_full).publish_state((response[5] & 1) ? "Full Charge" : "Not Full Charge");
+          }
+
+      # Langkah 4: Beri jeda lengang (Quiet Time) agar port komunikasi internal inverter netral
+      - delay: 1000ms
+
+      # Langkah 5: Buka kembali kunci rs232_lock untuk membiarkan RS485 merespons
+      - lambda: |-
+          id(rs232_lock) = false;
   - interval: 24h
     then:
       - lambda: |-
