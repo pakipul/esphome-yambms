@@ -302,7 +302,7 @@ text_sensor:
     name: "Battery Full"
     
 interval:
-- interval: ${rs232_interval}
+  - interval: ${rs232_interval}
     then:
       # Langkah 1: Kunci jalur agar RS485 menahan balasan sementara
       - lambda: |-
