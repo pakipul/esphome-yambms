@@ -62,7 +62,7 @@ api:
 substitutions:
   # This project uses the `sub-device` function of ESPHome to prefix entity names.
   # This allows to group entities into logical devices that appear separately in Home Assistant.
-  hostname: 'yambms' # Name of your ESPHome node registered on the IP network (DNS name must be unique)
+  hostname: 'yambms-tf' # Name of your ESPHome node registered on the IP network (DNS name must be unique)
   friendly_name : 'YamBMS' # Name of your board (prefix for board entities)
   # +--------------------------------------+
   # | YamBMS Settings                      |
@@ -78,13 +78,13 @@ substitutions:
   # Battery Chemistry
   yambms_battery_chemistry: '1' # 1-LFP | 2-Li-ion | 3-LTO
   # Number of cells in series
-  yambms_cell_count: '16'
+  yambms_cell_count: '8'
   # Bulk / Absorption Voltage : corresponds to the Bulk voltage that will be used to charge the battery. (LFP : 55.2V = 3.45V/Cell for 16S battery)
-  yambms_bulk_v: '55.2'
+  yambms_bulk_v: '27.6'
   # Float Voltage : corresponds to the voltage at which the battery would be maintained at the end of charge. (LFP : 53.6V = 3.35V/Cell for 16S battery)
-  yambms_float_v: '53.6'
+  yambms_float_v: '27.2'
   # Rebulk voltage, voltage from which a new Bulk charge can start. (LFP : 52.8V = 3.3V/Cell for 16S battery)
-  yambms_rebulk_v: '52.8'
+  yambms_rebulk_v: '26.6'
   # Maximum time in minutes that the cut-off step can last before charging is complete
   # If your cells are properly balanced this step ends at the fastest after the `cut-off timer`
   # This timer can be deactivated with a switch
@@ -93,7 +93,7 @@ substitutions:
   yambms_cutoff_timer: '60'
   # Max. charge current : corresponds to the maximum charge current which may be requested by YamBMS.
   # The current requested will be proportional to the BMS count without ever exceeding this value.
-  yambms_max_requested_charge_current: '300' # in Ampere
+  yambms_max_requested_charge_current: '60' # in Ampere
   # Max. discharge current : corresponds to the maximum discharge current which may be requested by YamBMS.
   # The current requested will be proportional to the BMS count without ever exceeding this value.
   yambms_max_requested_discharge_current: '300' # in Ampere
@@ -155,7 +155,7 @@ substitutions:
 
 packages:
   remote_packages:
-    url: https://github.com/Sleeper85/esphome-yambms
+    url: https://github.com/pakipul/esphome-yambms
     ref: main
     refresh: 60min
     files:
@@ -165,7 +165,7 @@ packages:
   # | >>> ONLY ONE BOARD !
   # +------------------------------------------------------------------------------+
 
-      - path: 'packages/board/board_ESP32_Generic.yaml'
+      # - path: 'packages/board/board_ESP32_Generic.yaml'
       # - path: 'packages/board/board_ESP32_Atom-Lite.yaml'
       # - path: 'packages/board/board_ESP32_DevKit-V1.yaml'
       # - path: 'packages/board/board_ESP32_EVB.yaml'
@@ -178,7 +178,7 @@ packages:
       # - path: 'packages/board/board_ESP32-S3_AtomS3-Lite.yaml'
       # - path: 'packages/board/board_ESP32-S3_AtomS3.yaml'
       # - path: 'packages/board/board_ESP32-S3_AtomS3R.yaml'
-      # - path: 'packages/board/board_ESP32-S3_DevKitC-1_LED-38.yaml'
+      - path: 'packages/board/board_ESP32-S3_DevKitC-1_LED-38.yaml'
       # - path: 'packages/board/board_ESP32-S3_DevKitC-1_LED-48.yaml'
       # - path: 'packages/board/board_ESP32-S3_LilyGo-T-Connect.yaml'
       # - path: 'packages/board/board_ESP32-S3_LilyGo-T-Connect-Pro.yaml'
@@ -215,7 +215,7 @@ packages:
   # +------------------------------------------------------------------------------+
 
       # UART 1 (uart_id: uart_esp_1)
-      # - path: 'packages/board/board_options_itf_uart_esp_1.yaml'
+      - path: 'packages/board/board_options_itf_uart_esp_1.yaml'
       # UART 2 (uart_id: uart_esp_2)
       # - path: 'packages/board/board_options_itf_uart_esp_2.yaml'
       # UART 3 (uart_id: uart_esp_3)
@@ -228,11 +228,11 @@ packages:
       #     uart_flow_control_pin: ${talk_pin}
 
       # CAN transceiver - ESP32_CAN (TJA105x, SN65HVD230, M5Stack CAN base/unit)
-      - path: 'packages/board/board_options_itf_canbus_esp32_can.yaml'
-        vars:
+      # - path: 'packages/board/board_options_itf_canbus_esp32_can.yaml'
+      #   vars:
           # to bms = canbus_bms_1
           # to inverter = canbus_inverter_1
-          canbus_node_id: 'canbus_inverter_1'
+      #     canbus_node_id: 'canbus_inverter_1'
       
       # CAN transceiver - MCP2515
       # - path: 'packages/board/board_options_itf_canbus_mcp2515.yaml'
@@ -274,7 +274,7 @@ packages:
           bms_id: '1' # must be a number
           bms_name: 'JK-BMS 1'
           bms_ble_protocol_version: 'JK02_32S' # JK02_24S < hardware version 11.0 >= JK02_32S
-          bms_ble_mac_address: 'C8:47:8C:10:7E:AA'
+          bms_ble_mac_address: !secret bms0_mac_address
           # Maximum cell charging cycles is used to calculate the battey SoH.
           # MB31=8000.0, LF280K v3=8000.0, LF280K v2=6000.0, LF280=3000.0 (decimal is required)
           bms_cell_max_cycles: '6000.0'
@@ -285,12 +285,23 @@ packages:
           bms_id: '2' # must be a number
           bms_name: 'JK-BMS 2'
           bms_ble_protocol_version: 'JK02_32S' # JK02_24S < hardware version 11.0 >= JK02_32S
-          bms_ble_mac_address: 'C8:47:8C:EE:16:EA'
+          bms_ble_mac_address: !secret bms1_mac_address
           # Maximum cell charging cycles is used to calculate the battey SoH.
           # MB31=8000.0, LF280K v3=8000.0, LF280K v2=6000.0, LF280=3000.0 (decimal is required)
           bms_cell_max_cycles: '6000.0'
           bms_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
-
+          
+      # BMS 3
+      - path: 'packages/bms/bms_combine_JK_BLE_standard.yaml'
+        vars:
+          bms_id: '3' # must be a number
+          bms_name: 'JK-BMS 3'
+          bms_ble_protocol_version: 'JK02_32S' # JK02_24S < hardware version 11.0 >= JK02_32S
+          bms_ble_mac_address: !secret bms3_mac_address
+          # Maximum cell charging cycles is used to calculate the battey SoH.
+          # MB31=8000.0, LF280K v3=8000.0, LF280K v2=6000.0, LF280=3000.0 (decimal is required)
+          bms_cell_max_cycles: '6000.0'
+          bms_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
 
 
   # +------------------------------------------------------------------------------+
@@ -305,16 +316,16 @@ packages:
   # | >>> CAN bus to Inverter
   # +------------------------------------------------------------------------------+
 
-      - path: 'packages/yambms/yambms_canbus.yaml' # yambms_canbus_web_server.yaml
-        vars:
-          canbus_id: '1' # must be a number
-          canbus_name: 'CANBUS 1'
-          canbus_node_id: 'canbus_inverter_1' # CAN bus node to which your inverter is connected
-          canbus_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
+      # - path: 'packages/yambms/yambms_canbus.yaml' # yambms_canbus_web_server.yaml
+      #   vars:
+      #     canbus_id: '1' # must be a number
+      #     canbus_name: 'CANBUS 1'
+      #     canbus_node_id: 'canbus_inverter_1' # CAN bus node to which your inverter is connected
+      #     canbus_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
           # CAN frames sending will be paused for `30s` if the inverter does not respond with an ACK (can_id 0x305) before the end of the `canbus_link_timer` (5s by default).
-          canbus_link_timer_enabled: 'true' # Set it to 'false' if your inverter/charger is not sending ACK (can_id 0x305) every `1s` as specified by the protocol
-          canbus_link_timer: '5s'
-          canbus_extended_ack: 'false' # Set to 'true' for enable extended 29-bit IDs (required for Schneider XW Pro)
+      #     canbus_link_timer_enabled: 'true' # Set it to 'false' if your inverter/charger is not sending ACK (can_id 0x305) every `1s` as specified by the protocol
+      #     canbus_link_timer: '5s'
+      #     canbus_extended_ack: 'false' # Set to 'true' for enable extended 29-bit IDs (required for Schneider XW Pro)
 
 
 
@@ -322,14 +333,14 @@ packages:
   # | >>> RS485 bus to Inverter
   # +------------------------------------------------------------------------------+
 
-  #     - path: 'packages/yambms/yambms_rs485_pylon.yaml' # yambms_rs485_pylon_web_server.yaml
-  #       vars:
-  #         rs485_id: '1' # Must be a number
-  #         rs485_name: 'RS485 1'
-  #         rs485_uart_id: 'uart_esp_3' # UART interface to which your inverter is connected
-  #         rs485_uart_baud_rate: '9600'
-  #         rs485_update_timeout: '10s'
-  #         rs485_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
+      - path: 'packages/yambms/yambms_rs485_pylon.yaml' # yambms_rs485_pylon_web_server.yaml
+        vars:
+          rs485_id: '1' # Must be a number
+          rs485_name: 'RS485 1'
+          rs485_uart_id: 'uart_esp_1' # UART interface to which your inverter is connected
+          rs485_uart_baud_rate: '9600'
+          rs485_update_timeout: '10s'
+          rs485_status_led_id: 'esp_light' # LED used to show status; default = esp_light, comment out to disable
 
 
 
