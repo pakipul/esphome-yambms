@@ -143,18 +143,21 @@ sensor:
     name: "Input Voltage"
     id: rs232${rs485_id}_input_voltage
     unit_of_measurement: "V"
+    device_class: voltage
     accuracy_decimals: 1
 
   - platform: template
     name: "Input Frequency"
     id: rs232${rs485_id}_input_frequency
     unit_of_measurement: "Hz"
+    device_class: frequency
     accuracy_decimals: 1
 
   - platform: template
     name: "Output Voltage"
     id: rs232${rs485_id}_output_voltage
     unit_of_measurement: "V"
+    device_class: voltage
     accuracy_decimals: 1
 
   - platform: template
@@ -162,29 +165,34 @@ sensor:
     id: rs232${rs485_id}_output_frequency
     unit_of_measurement: "Hz"
     accuracy_decimals: 1
+    device_class: frequency
 
   - platform: template
     name: "Battery Voltage"
     id: rs232${rs485_id}_battery_voltage
     unit_of_measurement: "V"
+    device_class: voltage
     accuracy_decimals: 1
 
   - platform: template
     name: "Battery Capacity"
     id: rs232${rs485_id}_battery_capacity
     unit_of_measurement: "%"
+    device_class: battery
     accuracy_decimals: 0
 
   - platform: template
     name: "Load Percentage"
     id: rs232${rs485_id}_load_percentage
     unit_of_measurement: "%"
+    state_class: measurement
     accuracy_decimals: 0
 
   - platform: template
     name: "Inverter Temperature"
     id: rs232${rs485_id}_inverter_temperature
     unit_of_measurement: "°C"
+    device_class: temperature
     accuracy_decimals: 0
 
   - platform: template
@@ -192,23 +200,27 @@ sensor:
     id: rs232${rs485_id}_pv_voltage
     unit_of_measurement: "V"
     accuracy_decimals: 0
+    device_class: voltage
 
   - platform: template
     name: "Solar Charge Current"
     id: rs232${rs485_id}_solar_charge_current
     unit_of_measurement: "A"
     accuracy_decimals: 0
+    device_class: current
 
   - platform: template
     name: "Charger Temperature"
     id: rs232${rs485_id}_charger_temperature
     unit_of_measurement: "°C"
     accuracy_decimals: 0
+    device_class: temperature
     
   - platform: template
     name: "Solar Power"
     id: rs232${rs485_id}_solar_power
     unit_of_measurement: "W"
+    device_class: power
     accuracy_decimals: 1
 
 binary_sensor:
