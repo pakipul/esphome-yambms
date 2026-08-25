@@ -177,7 +177,7 @@ sensor:
     state_of_charge:
       id: bms${bms_id}_state_of_charge
       device_id: bms_${bms_id}
-      unit_of_measurement: %
+      unit_of_measurement: "%"
       device_class: battery
       state_class: measurement
       # name: "state of charge"
