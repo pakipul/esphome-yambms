@@ -229,38 +229,38 @@ sensor:
       id: bms${bms_id}_cell_v_08
       device_id: bms_${bms_id}
       name: "cell voltage 08"
-    cell_voltage_9:
-      id: bms${bms_id}_cell_v_09
-      device_id: bms_${bms_id}
-      name: "cell voltage 09"
-    cell_voltage_10:
-      id: bms${bms_id}_cell_v_10
-      device_id: bms_${bms_id}
-      name: "cell voltage 10"
-    cell_voltage_11:
-      id: bms${bms_id}_cell_v_11
-      device_id: bms_${bms_id}
-      name: "cell voltage 11"
-    cell_voltage_12:
-      id: bms${bms_id}_cell_v_12
-      device_id: bms_${bms_id}
-      name: "cell voltage 12"
-    cell_voltage_13:
-      id: bms${bms_id}_cell_v_13
-      device_id: bms_${bms_id}
-      name: "cell voltage 13"
-    cell_voltage_14:
-      id: bms${bms_id}_cell_v_14
-      device_id: bms_${bms_id}
-      name: "cell voltage 14"
-    cell_voltage_15:
-      id: bms${bms_id}_cell_v_15
-      device_id: bms_${bms_id}
-      name: "cell voltage 15"
-    cell_voltage_16:
-      id: bms${bms_id}_cell_v_16
-      device_id: bms_${bms_id}
-      name: "cell voltage 16"
+#     cell_voltage_9:
+#       id: bms${bms_id}_cell_v_09
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 09"
+#     cell_voltage_10:
+#       id: bms${bms_id}_cell_v_10
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 10"
+#     cell_voltage_11:
+#       id: bms${bms_id}_cell_v_11
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 11"
+#     cell_voltage_12:
+#       id: bms${bms_id}_cell_v_12
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 12"
+#     cell_voltage_13:
+#       id: bms${bms_id}_cell_v_13
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 13"
+#     cell_voltage_14:
+#       id: bms${bms_id}_cell_v_14
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 14"
+#     cell_voltage_15:
+#       id: bms${bms_id}_cell_v_15
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 15"
+#     cell_voltage_16:
+#       id: bms${bms_id}_cell_v_16
+#       device_id: bms_${bms_id}
+#       name: "cell voltage 16"
     cell_resistance_1:
       device_id: bms_${bms_id}
       name: "cell resistance 01"
@@ -285,30 +285,30 @@ sensor:
     cell_resistance_8:
       device_id: bms_${bms_id}
       name: "cell resistance 08"
-    cell_resistance_9:
-      device_id: bms_${bms_id}
-      name: "cell resistance 09"
-    cell_resistance_10:
-      device_id: bms_${bms_id}
-      name: "cell resistance 10"
-    cell_resistance_11:
-      device_id: bms_${bms_id}
-      name: "cell resistance 11"
-    cell_resistance_12:
-      device_id: bms_${bms_id}
-      name: "cell resistance 12"
-    cell_resistance_13:
-      device_id: bms_${bms_id}
-      name: "cell resistance 13"
-    cell_resistance_14:
-      device_id: bms_${bms_id}
-      name: "cell resistance 14"
-    cell_resistance_15:
-      device_id: bms_${bms_id}
-      name: "cell resistance 15"
-    cell_resistance_16:
-      device_id: bms_${bms_id}
-      name: "cell resistance 16"
+#     cell_resistance_9:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 09"
+#     cell_resistance_10:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 10"
+#     cell_resistance_11:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 11"
+#     cell_resistance_12:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 12"
+#     cell_resistance_13:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 13"
+#     cell_resistance_14:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 14"
+#     cell_resistance_15:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 15"
+#     cell_resistance_16:
+#       device_id: bms_${bms_id}
+#       name: "cell resistance 16"
 
   # FAKE errors_bitmask
   # Alarm management is not supported at this time
