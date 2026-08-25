@@ -1249,7 +1249,7 @@ number:
     lambda: return id(yambms${yambms_id}_g_soc);
     set_action:
       - globals.set:
-          id: g_soc
+          id: yambms${yambms_id}_g_soc
           value: !lambda 'return x;'
 
   - platform: template
@@ -1263,7 +1263,7 @@ number:
     lambda: return id(yambms${yambms_id}_g_voltage);
     set_action:
       - globals.set:
-          id: g_voltage
+          id: yambms${yambms_id}_g_voltage
           value: !lambda 'return x;'
 
   - platform: template
@@ -1277,7 +1277,7 @@ number:
     lambda: return id(yambms${yambms_id}_g_current);
     set_action:
       - globals.set:
-          id: g_current
+          id: yambms${yambms_id}_g_current
           value: !lambda 'return x;'
 
   - platform: template
@@ -1319,7 +1319,7 @@ number:
     lambda: return id(yambms${yambms_id}_g_min_v);
     set_action:
       - globals.set:
-          id: g_min_v
+          id: yambms${yambms_id}_g_min_v
           value: !lambda 'return x;'
 
   - platform: template
