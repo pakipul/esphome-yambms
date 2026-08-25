@@ -1,41 +1,50 @@
+switch:
+  - platform: template
+    name: "BMS Emulator"
+    id: yambms${yambms_id}_switch_bms_emulator
+    device_id: yambms_yambms${yambms_id}
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: true
+    entity_category: config
+    
 globals:
   # --- sensors ---
-  - id: g_soc
+  - id: yambms${yambms_id}_g_soc
     type: float
     restore_value: yes
     initial_value: '75.0'
-  - id: g_voltage
+  - id: yambms${yambms_id}_g_voltage
     type: float
     restore_value: yes
     initial_value: '27.2'
-  - id: g_current
+  - id: yambms${yambms_id}_g_current
     type: float
     restore_value: yes
     initial_value: '15'
-  - id: g_temperature
+  - id: yambms${yambms_id}_g_temperature
     type: float
     restore_value: yes
     initial_value: '30.0'
-  - id: g_max_v
+  - id: yambms${yambms_id}_g_max_v
     type: float
     restore_value: yes
     initial_value: '27.6'
-  - id: g_min_v
+  - id: yambms${yambms_id}_g_min_v
     type: float
     restore_value: yes
     initial_value: '24.0'
-  - id: g_max_charge_i
+  - id: yambms${yambms_id}_g_max_charge_i
     type: float
     restore_value: yes
     initial_value: '25.0'
-  - id: g_max_discharge_i
+  - id: yambms${yambms_id}_g_max_discharge_i
     type: float
     restore_value: yes
     initial_value: '100.0'
 
 number:
   - platform: template
-    id: input_soc
+    id: yambms${yambms_id}_input_soc
     name: "Simulated Battery SoC"
     unit_of_measurement: "%"
     update_interval: 3s
@@ -49,99 +58,99 @@ number:
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_voltage # We keep the same ID
+    id: yambms${yambms_id}_input_voltage # We keep the same ID
     name: "Simulated Battery Voltage"
     unit_of_measurement: "V"
     update_interval: 3s
     min_value: 23.0
     max_value: 28.0
     step: 0.1
-    lambda: return id(g_voltage);
+    lambda: return id(yambms${yambms_id}_g_voltage);
     set_action:
       - globals.set:
           id: g_voltage
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_current # We keep the same ID
+    id: yambms${yambms_id}_input_current # We keep the same ID
     name: "Simulated Battery Current"
     unit_of_measurement: "A"
     update_interval: 3s
     min_value: -50.0
     max_value: 50.0
     step: 0.1
-    lambda: return id(g_current);
+    lambda: return id(yambms${yambms_id}_g_current);
     set_action:
       - globals.set:
           id: g_current
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_temperature # We keep the same ID
+    id: yambms${yambms_id}_input_temperature # We keep the same ID
     name: "Simulated Battery Temperature"
     unit_of_measurement: "°C"
     update_interval: 3s
     min_value: 0
     max_value: 50
     step: 1
-    lambda: return id(g_temperature);
+    lambda: return id(yambms${yambms_id}_g_temperature);
     set_action:
       - globals.set:
-          id: g_temperature
+          id: yambms${yambms_id}_g_temperature
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_max_v
+    id: yambms${yambms_id}_input_max_v
     name: "Simulated Max Voltage"
     unit_of_measurement: "V"
     update_interval: 3s
     min_value: 25.0
     max_value: 27.8
     step: 0.1
-    lambda: return id(g_max_v);
+    lambda: return id(yambms${yambms_id}_g_max_v);
     set_action:
       - globals.set:
-          id: g_max_v
+          id: yambms${yambms_id}_g_max_v
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_min_v
+    id: yambms${yambms_id}_input_min_v
     name: "Simulated Min Voltage"
     unit_of_measurement: "V"
     update_interval: 3s
     min_value: 22.0
     max_value: 24.0
     step: 0.1
-    lambda: return id(g_min_v);
+    lambda: return id(yambms${yambms_id}_g_min_v);
     set_action:
       - globals.set:
           id: g_min_v
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_max_charge_i
+    id: yambms${yambms_id}_input_max_charge_i
     name: "Simulated Max Charge Current"
     unit_of_measurement: "A"
     update_interval: 3s
     min_value: 0.0
     max_value: 50.0
     step: 0.5
-    lambda: return id(g_max_charge_i);
+    lambda: return id(yambms${yambms_id}_g_max_charge_i);
     set_action:
       - globals.set:
-          id: g_max_charge_i
+          id: yambms${yambms_id}_g_max_charge_i
           value: !lambda 'return x;'
 
   - platform: template
-    id: input_max_discharge_i
+    id: yambms${yambms_id}_input_max_discharge_i
     name: "Simulated Max Discharge Current"
     unit_of_measurement: "A"
     update_interval: 3s
     min_value: 0.0
     max_value: 100.0
     step: 0.5
-    lambda: return id(g_max_discharge_i);
+    lambda: return id(yambms${yambms_id}_g_max_discharge_i);
     set_action:
       - globals.set:
-          id: g_max_discharge_i
+          id: yambms${yambms_id}_g_max_discharge_i
           value: !lambda 'return x;'
