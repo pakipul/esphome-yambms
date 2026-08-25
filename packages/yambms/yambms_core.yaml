@@ -1248,6 +1248,7 @@ number:
     id: yambms${yambms_id}_input_soc
     name: "Simulated Battery SoC"
     unit_of_measurement: "%"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 0
     max_value: 100
@@ -1262,6 +1263,7 @@ number:
     id: yambms${yambms_id}_input_voltage # We keep the same ID
     name: "Simulated Battery Voltage"
     unit_of_measurement: "V"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 23.0
     max_value: 28.0
@@ -1276,6 +1278,7 @@ number:
     id: yambms${yambms_id}_input_current # We keep the same ID
     name: "Simulated Battery Current"
     unit_of_measurement: "A"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: -50.0
     max_value: 50.0
@@ -1290,6 +1293,7 @@ number:
     id: yambms${yambms_id}_input_temperature # We keep the same ID
     name: "Simulated Battery Temperature"
     unit_of_measurement: "°C"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 0
     max_value: 50
@@ -1304,6 +1308,7 @@ number:
     id: yambms${yambms_id}_input_max_v
     name: "Simulated Max Voltage"
     unit_of_measurement: "V"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 25.0
     max_value: 27.8
@@ -1318,6 +1323,7 @@ number:
     id: yambms${yambms_id}_input_min_v
     name: "Simulated Min Voltage"
     unit_of_measurement: "V"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 22.0
     max_value: 24.0
@@ -1332,6 +1338,7 @@ number:
     id: yambms${yambms_id}_input_max_charge_i
     name: "Simulated Max Charge Current"
     unit_of_measurement: "A"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 0.0
     max_value: 50.0
@@ -1346,6 +1353,7 @@ number:
     id: yambms${yambms_id}_input_max_discharge_i
     name: "Simulated Max Discharge Current"
     unit_of_measurement: "A"
+    device_id: yambms_yambms${yambms_id}
     update_interval: 3s
     min_value: 0.0
     max_value: 100.0
