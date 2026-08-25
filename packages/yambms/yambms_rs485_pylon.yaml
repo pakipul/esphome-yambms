@@ -26,7 +26,7 @@ esphome:
     - priority: 300.0
       then:
         - lambda: |-
-            // Menghubungkan pointer C++ di pylontech_rs485 dengan variabel global rs232_lock
+          // Menghubungkan pointer C++ di pylontech_rs485 dengan variabel global rs232_lock
             esphome::pylontech_rs485::pylon_rs232_lock_ptr = id(rs232_lock);
             
     - priority: 600.0
