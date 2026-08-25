@@ -497,6 +497,10 @@ interval:
               charging_cycles = round(id(yambms${yambms_id}_var_total_charging_cycles) / id(yambms${yambms_id}_var_to_combine_bms_counter));
             }
 
+            if (id(yambms${yambms_id}_switch_bms_emulator).state) {
+              ESP_LOGD("yambms_debug", "BMS Emulator Enable");
+            }
+
             // Publishing sensors
             id(yambms${yambms_id}_total_voltage).publish_state(total_voltage);
             id(yambms${yambms_id}_current).publish_state(current);
