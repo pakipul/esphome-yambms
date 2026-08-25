@@ -86,7 +86,122 @@ switch:
     optimistic: true
     entity_category: config
 
+
+## add bms emulator
 number:
+  - platform: template
+    id: yambms${yambms_id}_input_soc
+    name: "Simulated Battery SoC"
+    unit_of_measurement: "%"
+    update_interval: 3s
+    min_value: 0
+    max_value: 100
+    step: 1
+    lambda: return id(g_soc);
+    set_action:
+      - globals.set:
+          id: g_soc
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_voltage # We keep the same ID
+    name: "Simulated Battery Voltage"
+    unit_of_measurement: "V"
+    update_interval: 3s
+    min_value: 23.0
+    max_value: 28.0
+    step: 0.1
+    lambda: return id(yambms${yambms_id}_g_voltage);
+    set_action:
+      - globals.set:
+          id: g_voltage
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_current # We keep the same ID
+    name: "Simulated Battery Current"
+    unit_of_measurement: "A"
+    update_interval: 3s
+    min_value: -50.0
+    max_value: 50.0
+    step: 0.1
+    lambda: return id(yambms${yambms_id}_g_current);
+    set_action:
+      - globals.set:
+          id: g_current
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_temperature # We keep the same ID
+    name: "Simulated Battery Temperature"
+    unit_of_measurement: "°C"
+    update_interval: 3s
+    min_value: 0
+    max_value: 50
+    step: 1
+    lambda: return id(yambms${yambms_id}_g_temperature);
+    set_action:
+      - globals.set:
+          id: yambms${yambms_id}_g_temperature
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_max_v
+    name: "Simulated Max Voltage"
+    unit_of_measurement: "V"
+    update_interval: 3s
+    min_value: 25.0
+    max_value: 27.8
+    step: 0.1
+    lambda: return id(yambms${yambms_id}_g_max_v);
+    set_action:
+      - globals.set:
+          id: yambms${yambms_id}_g_max_v
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_min_v
+    name: "Simulated Min Voltage"
+    unit_of_measurement: "V"
+    update_interval: 3s
+    min_value: 22.0
+    max_value: 24.0
+    step: 0.1
+    lambda: return id(yambms${yambms_id}_g_min_v);
+    set_action:
+      - globals.set:
+          id: g_min_v
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_max_charge_i
+    name: "Simulated Max Charge Current"
+    unit_of_measurement: "A"
+    update_interval: 3s
+    min_value: 0.0
+    max_value: 50.0
+    step: 0.5
+    lambda: return id(yambms${yambms_id}_g_max_charge_i);
+    set_action:
+      - globals.set:
+          id: yambms${yambms_id}_g_max_charge_i
+          value: !lambda 'return x;'
+
+  - platform: template
+    id: yambms${yambms_id}_input_max_discharge_i
+    name: "Simulated Max Discharge Current"
+    unit_of_measurement: "A"
+    update_interval: 3s
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.5
+    lambda: return id(yambms${yambms_id}_g_max_discharge_i);
+    set_action:
+      - globals.set:
+          id: yambms${yambms_id}_g_max_discharge_i
+          value: !lambda 'return x;'
+
+# number: ori
   - platform: template
     name: "Auto SoC Limit"
     id: yambms${yambms_id}_auto_soc_limit
