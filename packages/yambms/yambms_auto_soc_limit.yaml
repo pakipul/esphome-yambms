@@ -30,8 +30,17 @@ globals:
     type: bool
     restore_value: no
     initial_value: 'false'
-
+# add bms emulator
 switch:
+  - platform: template
+    name: "BMS Emulator"
+    id: yambms${yambms_id}_switch_bms_emulator
+    device_id: yambms_yambms${yambms_id}
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: true
+    entity_category: config
+    
+# switch:
   - platform: template
     name: "Automatic SoC Limit"
     id: yambms${yambms_id}_switch_auto_soc_limit
