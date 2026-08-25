@@ -30,4 +30,4 @@ packages:
   yambms_auto_7: !include yambms_auto_soc_limit.yaml
   # Update service
   yambms_service: !include yambms_service.yaml
-  yambms_auto_8: !include yambms_bms_emulator
+  # yambms_auto_8: !include yambms_bms_emulator
