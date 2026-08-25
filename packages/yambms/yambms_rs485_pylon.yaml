@@ -22,20 +22,7 @@ substitutions:
   rs485_status_led_id: "virtual_status_light"
 
 esphome:
-  on_boot:
-    - priority: 300.0
-      then:
-        - lambda: |-
-            // 1. Deklarasikan pointer eksternal buatan ESPHome untuk rs232_lock
-            extern esphome::globals::GlobalsComponent<bool> *global_rs232_lock;
-  
-            // 2. Deklarasikan pointer eksternal di namespace pylontech_rs485 (tanpa blok namespace)
-            namespace esphome { namespace pylontech_rs485 { class PylontechRS485; } }
-            extern esphome::globals::GlobalsComponent<bool> *esphome_pylontech_rs485_pylon_rs232_lock_ptr;
-  
-            // 3. Masukkan pointer langsung
-            esphome::pylontech_rs485::pylon_rs232_lock_ptr = global_rs232_lock;
-            
+  on_boot:   
     - priority: 600.0
       then:
         - lambda: |-
