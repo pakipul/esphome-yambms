@@ -177,6 +177,7 @@ sensor:
     state_of_charge:
       id: bms${bms_id}_state_of_charge
       device_id: bms_${bms_id}
+      state_class: measurement
       # name: "state of charge"
     capacity_remaining:
       id: bms${bms_id}_capacity_remaining_ah
