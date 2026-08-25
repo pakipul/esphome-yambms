@@ -26,14 +26,18 @@ esphome:
     - priority: 300.0
       then:
         - lambda: |-
+            // 1. Deklarasikan variabel eksternal buatan ESPHome
+            extern esphome::globals::GlobalsComponent<bool> *global_rs232_lock;
+  
+            // 2. Deklarasikan pointer di namespace pylontech_rs485
             namespace esphome {
               namespace pylontech_rs485 {
                 extern globals::GlobalsComponent<bool> *pylon_rs232_lock_ptr;
               }
             }
-
-          // Menghubungkan pointer C++ di pylontech_rs485 dengan variabel global rs232_lock
-            esphome::pylontech_rs485::pylon_rs232_lock_ptr = &id(rs232_lock);
+  
+            // 3. Masukkan pointer objek global ke pointer pylontech
+            esphome::pylontech_rs485::pylon_rs232_lock_ptr = global_rs232_lock;
             
     - priority: 600.0
       then:
