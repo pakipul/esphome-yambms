@@ -1246,7 +1246,7 @@ number:
     min_value: 0
     max_value: 100
     step: 1
-    lambda: return id(g_soc);
+    lambda: return id(yambms${yambms_id}_g_soc);
     set_action:
       - globals.set:
           id: g_soc
