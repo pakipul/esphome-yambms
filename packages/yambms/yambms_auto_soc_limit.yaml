@@ -24,7 +24,44 @@ esphome:
         - lambda: |-
             id(yambms${yambms_id}_var_auto_ccl_functions_count)++;
 
+
+# add bms emulator
 globals:
+  # --- sensors ---
+  - id: yambms${yambms_id}_g_soc
+    type: float
+    restore_value: yes
+    initial_value: '75.0'
+  - id: yambms${yambms_id}_g_voltage
+    type: float
+    restore_value: yes
+    initial_value: '27.2'
+  - id: yambms${yambms_id}_g_current
+    type: float
+    restore_value: yes
+    initial_value: '15'
+  - id: yambms${yambms_id}_g_temperature
+    type: float
+    restore_value: yes
+    initial_value: '30.0'
+  - id: yambms${yambms_id}_g_max_v
+    type: float
+    restore_value: yes
+    initial_value: '27.6'
+  - id: yambms${yambms_id}_g_min_v
+    type: float
+    restore_value: yes
+    initial_value: '24.0'
+  - id: yambms${yambms_id}_g_max_charge_i
+    type: float
+    restore_value: yes
+    initial_value: '25.0'
+  - id: yambms${yambms_id}_g_max_discharge_i
+    type: float
+    restore_value: yes
+    initial_value: '100.0'
+    
+# globals: ori
   # Target SoC was reached flag
   - id: yambms${yambms_id}_var_auto_soc_target_reached
     type: bool
