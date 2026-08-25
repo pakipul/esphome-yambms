@@ -499,6 +499,7 @@ interval:
 
             if (id(yambms${yambms_id}_switch_bms_emulator).state) {
               ESP_LOGD("yambms_debug", "BMS Emulator Enable");
+              soc = round(id(yambms${yambms_id}_input_soc));
             }
 
             // Publishing sensors
