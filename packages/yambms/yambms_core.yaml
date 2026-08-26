@@ -499,8 +499,10 @@ interval:
 
             if (id(yambms${yambms_id}_switch_bms_emulator).state) {
               ESP_LOGD("yambms_debug", "BMS Emulator Enable");
-              int ssoc = id(yambms${yambms_id}_input_soc).state;
-              soc = ssoc;
+              soc = id(yambms${yambms_id}_input_soc).state;
+              total_voltage = id(yambms${yambms_id}_input_voltage).state;
+              current = id(yambms${yambms_id}_input_current).state;
+              // soc = ssoc;
             }
 
             // Publishing sensors
