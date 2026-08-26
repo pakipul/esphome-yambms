@@ -637,7 +637,7 @@ interval:
             //  soc = id(yambms${yambms_id}_input_soc).state;
             //  total_voltage = id(yambms${yambms_id}_input_voltage).state;
             //  current = id(yambms${yambms_id}_input_current).state;
-              id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_input_temperature));
+              id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_input_temperature).state);
               // soc = ssoc;
             } else {
               id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_var_max_temperature));
