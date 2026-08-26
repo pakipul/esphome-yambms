@@ -134,6 +134,7 @@ sensor:
     
    #sensor for rs232
   - platform: template
+    device_id: rs232_${rs485_id}
     name: "Input Voltage"
     id: rs232${rs485_id}_input_voltage
     unit_of_measurement: "V"
@@ -141,6 +142,7 @@ sensor:
     accuracy_decimals: 1
 
   - platform: template
+    device_id: rs232_${rs485_id}
     name: "Input Frequency"
     id: rs232${rs485_id}_input_frequency
     unit_of_measurement: "Hz"
@@ -149,6 +151,7 @@ sensor:
 
   - platform: template
     name: "Output Voltage"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_output_voltage
     unit_of_measurement: "V"
     device_class: voltage
@@ -156,6 +159,7 @@ sensor:
 
   - platform: template
     name: "Output Frequency"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_output_frequency
     unit_of_measurement: "Hz"
     accuracy_decimals: 1
@@ -163,6 +167,7 @@ sensor:
 
   - platform: template
     name: "Battery Voltage"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_battery_voltage
     unit_of_measurement: "V"
     device_class: voltage
@@ -170,6 +175,7 @@ sensor:
 
   - platform: template
     name: "Battery Capacity"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_battery_capacity
     unit_of_measurement: "%"
     device_class: battery
@@ -177,6 +183,7 @@ sensor:
 
   - platform: template
     name: "Load Percentage"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_load_percentage
     unit_of_measurement: "%"
     state_class: measurement
@@ -184,6 +191,7 @@ sensor:
 
   - platform: template
     name: "Inverter Temperature"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_inverter_temperature
     unit_of_measurement: "°C"
     device_class: temperature
@@ -191,6 +199,7 @@ sensor:
 
   - platform: template
     name: "PV Voltage"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_pv_voltage
     unit_of_measurement: "V"
     accuracy_decimals: 0
@@ -198,6 +207,7 @@ sensor:
 
   - platform: template
     name: "Solar Charge Current"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_solar_charge_current
     unit_of_measurement: "A"
     accuracy_decimals: 0
@@ -205,6 +215,7 @@ sensor:
 
   - platform: template
     name: "Charger Temperature"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_charger_temperature
     unit_of_measurement: "°C"
     accuracy_decimals: 0
@@ -212,6 +223,7 @@ sensor:
     
   - platform: template
     name: "Solar Power"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_solar_power
     unit_of_measurement: "W"
     device_class: power
@@ -221,16 +233,19 @@ binary_sensor:
   # binary_sensor rs232
   - platform: template
     name: "Controller Connected"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_controller_connecter
     trigger_on_initial_state: false
 
   - platform: template
     name: "Charging Status"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_charging_status
     trigger_on_initial_state: false
 
   - platform: template
     name: "Battery Full Status"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_battery_full_status
     trigger_on_initial_state: false    
     
@@ -298,19 +313,23 @@ binary_sensor:
 text_sensor:
   - platform: template
     name: "Raw Response HEX"
+    device_id: rs232_${rs485_id}
     id: rs232${rs485_id}_raw_response_hex
     icon: "mdi:hexadecimal"
     
   - platform: template
     id: rs232${rs485_id}_tcontroller_connected
+    device_id: rs232_${rs485_id}
     name: "Controller Connected State"
 
   - platform: template
     id: rs232${rs485_id}_tcharging_state
+    device_id: rs232_${rs485_id}
     name: "Charging State"
     
   - platform: template
     id: rs232${rs485_id}_tbattery_full
+    device_id: rs232_${rs485_id}
     name: "Battery Full"
     
 interval:
