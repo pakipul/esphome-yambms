@@ -41,7 +41,7 @@ esphome:
     - id: rs485_${rs485_id}
       name: "${yambms_name} ${rs485_name}"
     - id: rs232_${rs485_id}
-      name: "${yambms_name} $$rs232_name}
+      name: "${yambms_name} ${rs232_name}
 
 external_components:
   - source: github://pakipul/esphome-pylontech-rs485@main
