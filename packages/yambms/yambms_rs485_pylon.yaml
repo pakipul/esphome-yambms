@@ -54,7 +54,7 @@ uart:
     baud_rate: ${rs232_uart_baud_rate}
     
 globals:
-  - id: rs232_lock_state
+  - id: serial_rs232_lock_state
     type: bool
     restore_value: no
     initial_value: 'false'
@@ -339,7 +339,7 @@ interval:
     then:
       # Langkah 1: Kunci jalur agar RS485 menahan balasan sementara
       - lambda: |-
-          id(rs232_lock_state) = true;
+          id(serial_rs232_lock_state) = true;
 
           // Clear buffer RX sebelum mengirim perintah
           while (id(${rs232_uart_id}).read_byte(nullptr));
@@ -418,7 +418,7 @@ interval:
 
       # Langkah 5: Buka kembali kunci rs232_lock untuk membiarkan RS485 merespons
       - lambda: |-
-          id(rs232_lock_state) = false;
+          id(serial_rs232_lock_state) = false;
   - interval: 24h
     then:
       - lambda: |-
