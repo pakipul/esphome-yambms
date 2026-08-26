@@ -632,7 +632,16 @@ interval:
             // | MAX temperature                               |
             // | MAX temperature_sensor                        |
             // +-----------------------------------------------+
-            id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_var_max_temperature));
+            if (id(yambms${yambms_id}_switch_bms_emulator).state) {
+              ESP_LOGD("yambms_debug", "BMS Emulator Enable set max temperature");
+            //  soc = id(yambms${yambms_id}_input_soc).state;
+            //  total_voltage = id(yambms${yambms_id}_input_voltage).state;
+            //  current = id(yambms${yambms_id}_input_current).state;
+              id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_input_temperature));
+              // soc = ssoc;
+            } else {
+              id(yambms${yambms_id}_max_temperature).publish_state(id(yambms${yambms_id}_var_max_temperature));
+            }
             id(yambms${yambms_id}_max_temperature_sensor).publish_state(id(yambms${yambms_id}_var_max_temperature_sensor));
 
             // +-----------------------------------------------+
