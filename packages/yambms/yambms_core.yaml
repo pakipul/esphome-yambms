@@ -487,7 +487,7 @@ interval:
                 soc = round(id(yambms${yambms_id}_var_total_battery_capacity_remaining) / id(yambms${yambms_id}_var_total_battery_capacity) * 100);
 
               // SOC manipulation
-              if (id(yambms${yambms_id}_var_to_combine_bms_counter) == 0) soc = 0;      // no BMS combined => sending 0%
+              if (id(yambms${yambms_id}_var_to_combine_bms_counter) == 0) soc = ${yambms_default_soc} ;      // no BMS combined => sending 0%. rev. as default soc variable
               else if ((soc > 98) && (id(yambms${yambms_id}_var_eoc) == false)) soc = 98;   // Useful for some inverters stopping charging when SoC reaches 100%
 
               // MEAN Battery SOH
