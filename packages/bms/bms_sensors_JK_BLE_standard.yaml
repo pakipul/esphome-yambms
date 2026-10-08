@@ -376,6 +376,12 @@ number:
       id: bms${bms_id}_cell_uvpr
       device_id: bms_${bms_id}
       name: "cell voltage undervoltage recovery"
+    cell_soc100_voltage:
+      id: bms${bms_id}_soc100_voltage
+      name: "cell soc100 voltage"
+    cell_soc0_voltage:
+      id: bms${bms_id}_soc0_voltage
+      name: "cell soc0 voltage"
     max_charge_current:
       id: bms${bms_id}_max_charge_current
       device_id: bms_${bms_id}
