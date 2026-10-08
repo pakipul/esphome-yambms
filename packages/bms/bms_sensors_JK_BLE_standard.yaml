@@ -384,6 +384,10 @@ number:
       id: bms${bms_id}_cell_soc0_voltage
       device_id: bms_${bms_id}
       name: "cell soc0 voltage"
+    power_off_voltage:
+      id: bms${bms_id}_power_off_voltage
+      device_id: bms_${bms_id}
+      name: "power off voltage"
     max_charge_current:
       id: bms${bms_id}_max_charge_current
       device_id: bms_${bms_id}
