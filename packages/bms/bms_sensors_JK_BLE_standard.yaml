@@ -388,6 +388,14 @@ number:
       id: bms${bms_id}_power_off_voltage
       device_id: bms_${bms_id}
       name: "power off voltage"
+    voltage_calibration:
+      id: bms${bms_id}_voltage_calibration
+      device_id: bms_${bms_id}
+      name: "voltage calibration"
+    current_calibration:
+      id: bms${bms_id}_current_calibration
+      device_id: bms_${bms_id}
+      name: "current calibration"
     max_charge_current:
       id: bms${bms_id}_max_charge_current
       device_id: bms_${bms_id}
