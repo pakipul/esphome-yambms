@@ -230,6 +230,18 @@ sensor:
     unit_of_measurement: "W"
     device_class: power
     accuracy_decimals: 1
+    
+  - platform: integration
+    sensor: rs232${rs485_id}_solar_power
+    device_id: rs232_${rs485_id}
+    id: rs232${rs485_id}_total_energy
+    name: "Total Solar Generated Energy"
+    unit_of_measurement: "kWh"
+    time_unit: h
+    integration_method: trapezoid
+    restore: true
+    filters: 
+      - multiply: 0.001
 
 binary_sensor:
   # binary_sensor rs232
