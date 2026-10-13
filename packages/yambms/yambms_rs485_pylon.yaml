@@ -239,7 +239,7 @@ sensor:
     unit_of_measurement: "kWh"
     time_unit: h
     integration_method: trapezoid
-    restore_value: yes
+    restore: true
     filters: 
       - multiply: 0.001
 
