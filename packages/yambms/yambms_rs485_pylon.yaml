@@ -238,6 +238,7 @@ sensor:
     name: "Total Solar Generated Energy"
     unit_of_measurement: "kWh"
     time_unit: h
+    device_class: energy
     integration_method: trapezoid
     restore: true
     filters: 
